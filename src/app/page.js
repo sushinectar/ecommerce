@@ -40,12 +40,11 @@ export default function Home() {
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-white p-8 rounded-md w-80">
-            <h2 className="text-xl mb-4">Menu</h2>
             <ul>
               <li>
                 <button
                   onClick={() => handleNavigation("/shop")}
-                  className="block p-2 text-lg text-gray-700 hover:bg-gray-200 rounded-md w-full"
+                  className="block p-2 text-lg text-gray-700 rounded-md w-full"
                 >
                   Shop
                 </button>
@@ -53,7 +52,7 @@ export default function Home() {
               <li>
                 <button
                   onClick={() => handleNavigation("/about")}
-                  className="block p-2 text-lg text-gray-700 hover:bg-gray-200 rounded-md w-full"
+                  className="block p-2 text-lg text-gray-700 rounded-md w-full"
                 >
                   About
                 </button>
@@ -62,7 +61,7 @@ export default function Home() {
               <li>
                 <button
                   onClick={() => handleNavigation("/account")}
-                  className="block p-2 text-lg text-gray-700 hover:bg-gray-200 rounded-md w-full"
+                  className="block p-2 text-lg text-gray-700 rounded-md w-full"
                 >
                   Account
                 </button>
@@ -70,13 +69,23 @@ export default function Home() {
             </ul>
             <button
               onClick={toggleModal} // Fechar o modal
-              className="mt-4 p-2 w-full bg-red-500 text-white rounded-md"
+              className="mt-4 p-2 w-full bg-lime-300 text-gray-700 rounded-md font-bold"
             >
               Close
             </button>
           </div>
         </div>
       )}
+
+      <div className="absolute z-10 top-56 inset-x-12">
+        <h1 className="inset-x-12 text-3xl text-slate-900">Nossos produtos.</h1>
+        <button
+          onClick={() => handleNavigation("/shop")}
+          className="inset-x- top-2 h-12 w-28 m-6 bg-lime-500 rounded-md font-bold"
+        >
+          Shop
+        </button>
+      </div>
 
       <div className="">
         <div className="w-full h-screen relative">
