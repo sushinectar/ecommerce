@@ -5,8 +5,9 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false) // Estado para controlar o modal
-  const router = useRouter() // Para navegação entre as páginas
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false) // Estado para controlar a cor do nav
+  const router = useRouter()
 
   // Função para abrir e fechar o modal
   const toggleModal = () => {
@@ -15,13 +16,27 @@ export default function Home() {
 
   // Função para navegar para a página desejada
   const handleNavigation = page => {
-    router.push(page) // Navega para a página correspondente
-    setIsModalOpen(false) // Fecha o modal após a navegação
+    router.push(page)
+    setIsModalOpen(false)
   }
+
+  // Detecta o scroll e altera a cor do nav
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
     <div className="flex-1 justify-center text-center items-center">
-      <nav className="fixed z-10 w-full h-24 flex justify-around text-center items-center bg-transparent text-slate-950">
+      {/* Nav com cor sólida e transição */}
+      <nav
+        className={`fixed z-10 w-full h-24 flex justify-around text-center items-center transition-all duration-500 ${
+          isScrolled ? "bg-[#FFECD8]" : "bg-transparent"
+        } text-slate-950`}
+      >
         <div className="flex gap-5">
           {/* Botão Menu */}
           <button onClick={toggleModal}>
@@ -57,7 +72,6 @@ export default function Home() {
                   About
                 </button>
               </li>
-              {/* Novo item: Account */}
               <li>
                 <button
                   onClick={() => handleNavigation("/account")}
@@ -69,7 +83,7 @@ export default function Home() {
             </ul>
             <button
               onClick={toggleModal} // Fechar o modal
-              className="mt-4 p-2 w-full bg-lime-300 text-gray-700 rounded-md font-bold"
+              className="mt-4 p-2 w-full bg-lime-600 rounded-md font-bold"
             >
               Close
             </button>
@@ -77,25 +91,40 @@ export default function Home() {
         </div>
       )}
 
-      <div className="absolute z-10 top-56 inset-x-12">
-        <h1 className="inset-x-12 text-3xl text-slate-900">Nossos produtos.</h1>
+      <div className="absolute z-10 bottom-8 right-8">
+        <h1 className="inset-x-12 text-3xl text-slate-900">Start thriving.</h1>
         <button
           onClick={() => handleNavigation("/shop")}
-          className="inset-x- top-2 h-12 w-28 m-6 bg-lime-500 rounded-md font-bold"
+          className="inset-x- top-2 h-12 w-28 m-6 bg-lime-600 rounded-md font-bold"
         >
           Shop
         </button>
       </div>
 
-      <div className="">
-        <div className="w-full h-screen relative">
-          <Image src="/banner-mobile.png" alt="Banner" layout="fill" objectFit="cover" />
-        </div>
+      <div className="relative w-screen h-screen overflow-hidden">
+        <Image
+          src="/banner-container.jpg"
+          alt="Banner Sign-Up"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="55% center"
+        />
       </div>
 
+      {/* Principal content */}
       <main className="flex-1 justify-center text-center items-center">
-        <h1 className="text-slate-950">Hello World!</h1>
+        <h1 className="text-2xl text-slate-950">Best sellers</h1>
       </main>
+
+      <div className="flex-col justify-center align-center items-center">
+        <Image src="/banner-sign.jpg" alt="Banner Sign-Up" width="2" height="2" objectFit="cover" />
+        <h1 className="text-2xl text-slate-950">Be closer to us</h1>
+        <p className="text-slate-950">Get exclusive access to various special offers and discounts.</p>
+
+        <button className="w-28 h-12 bg-lime-600 rounded-md font-bold ">Sign Up</button>
+      </div>
+
+      <footer></footer>
     </div>
   )
 }
